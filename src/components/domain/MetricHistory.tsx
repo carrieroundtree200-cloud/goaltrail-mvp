@@ -126,25 +126,28 @@ export function MetricHistory({ goal, metric }: { goal: Goal; metric: MetricSnap
         </text>
       </svg>
 
-      <table className="sr-only">
-        <caption>{goal.metric.name} readings</caption>
-        <thead>
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Value</th>
-            <th scope="col">Note</th>
-          </tr>
-        </thead>
-        <tbody>
-          {points.map((point, index) => (
-            <tr key={`${point.date}-row-${index}`}>
-              <td>{formatShortDate(point.date)}</td>
-              <td>{formatMetricValue(point.value, unit)}</td>
-              <td>{point.note ?? ''}</td>
+      {/* A table ignores `width: 1px`, so the clipping has to happen on a wrapper. */}
+      <div className="sr-only">
+        <table>
+          <caption>{goal.metric.name} readings</caption>
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Value</th>
+              <th scope="col">Note</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {points.map((point, index) => (
+              <tr key={`${point.date}-row-${index}`}>
+                <td>{formatShortDate(point.date)}</td>
+                <td>{formatMetricValue(point.value, unit)}</td>
+                <td>{point.note ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

@@ -89,7 +89,7 @@ export function PeopleTab() {
             const blocked = theirTasks.filter((task) => task.status === 'blocked')
 
             return (
-              <article key={member.id} className="card flex flex-col p-4">
+              <article key={member.id} className="card flex min-w-0 flex-col p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-3">
                     <Avatar person={member.person} size="md" />
