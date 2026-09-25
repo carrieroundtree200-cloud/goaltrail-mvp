@@ -31,6 +31,14 @@ export function Dialog({
   const titleId = useId()
   const descriptionId = useId()
 
+  // Callers pass an inline arrow, so keeping `onClose` out of the effect's
+  // dependencies stops a parent re-render from re-running the setup below and
+  // yanking focus back to the first field.
+  const closeRef = useRef(onClose)
+  useEffect(() => {
+    closeRef.current = onClose
+  }, [onClose])
+
   useEffect(() => {
     if (!open) return
 
@@ -44,7 +52,7 @@ export function Dialog({
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         event.preventDefault()
-        onClose()
+        closeRef.current()
         return
       }
       if (event.key !== 'Tab' || !panel) return
@@ -71,7 +79,7 @@ export function Dialog({
       document.body.style.overflow = overflow
       previouslyFocused?.focus?.()
     }
-  }, [open, onClose])
+  }, [open])
 
   if (!open) return null
 

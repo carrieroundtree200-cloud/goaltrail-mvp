@@ -67,17 +67,21 @@ export function MeetingDetail() {
     formState: { errors, isSubmitting },
   } = useForm<DecisionValues>({ resolver: zodResolver(decisionSchema) })
 
+  // Kept as plain strings rather than depending on `detail`, which is rebuilt on
+  // every render: an unstable dependency here would wipe the form mid-typing.
+  const defaultDecidedBy = detail?.attendees[0]?.id ?? workspace.people[0]?.id ?? ''
+  const defaultDecisionDate = detail?.meeting.date ?? toDateOnly(today())
+
   useEffect(() => {
-    if (addingDecision) {
-      reset({
-        title: '',
-        detail: '',
-        consequence: '',
-        decidedById: detail?.attendees[0]?.id ?? workspace.people[0]?.id ?? '',
-        date: detail?.meeting.date ?? toDateOnly(today()),
-      })
-    }
-  }, [addingDecision, detail, workspace.people, reset])
+    if (!addingDecision) return
+    reset({
+      title: '',
+      detail: '',
+      consequence: '',
+      decidedById: defaultDecidedBy,
+      date: defaultDecisionDate,
+    })
+  }, [addingDecision, defaultDecidedBy, defaultDecisionDate, reset])
 
   if (status === 'loading') {
     return (

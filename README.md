@@ -27,7 +27,7 @@ Other scripts:
 ```bash
 npm run build     # typecheck and produce a production build in dist/
 npm run preview   # serve the production build on http://127.0.0.1:43918
-npm run test      # vitest, covering the metric and health engines and the demo data
+npm run test      # vitest: the metric and health engines, form validation, the data service, the demo data
 npm run lint      # oxlint
 ```
 
