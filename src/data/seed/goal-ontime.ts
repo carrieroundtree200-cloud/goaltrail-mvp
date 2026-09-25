@@ -235,7 +235,7 @@ export const ontimeSlice: GoalSlice = {
       ownerId: 'p_grace',
       dueIn: -2,
       blockedReason:
-        'Waiting on the RouteOne vendor to confirm the time-zone setting can be changed without a full re-index. Ticket raised 9 days ago, no reply yet.',
+        'The RouteOne vendor has not confirmed whether the time-zone setting can be changed without a full re-index. Ticket raised 9 days ago, no reply yet.',
       createdDaysAgo: 21,
       updatedDaysAgo: 2,
     },

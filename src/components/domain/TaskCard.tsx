@@ -22,42 +22,18 @@ export function TaskCard({ task, owner, milestone, onEdit, onChangeStatus }: Tas
 
   return (
     <article className="border-hairline rounded-xl border bg-white p-3 shadow-xs">
-      <div className="flex items-start justify-between gap-2">
-        <h4
-          className={cn(
-            'text-sm leading-snug font-medium',
-            task.status === 'done' ? 'text-slate-500' : 'text-slate-900',
-          )}
-        >
-          {task.title}
-        </h4>
-        <div className="flex shrink-0 items-center gap-1">
-          <button
-            type="button"
-            onClick={() => onEdit(task)}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-          >
-            <Pencil aria-hidden="true" className="size-3.5" />
-            <span className="sr-only">Edit {task.title}</span>
-          </button>
-          <Menu
-            label={`Change status of ${task.title}`}
-            trigger={<MoveRight aria-hidden="true" className="size-3.5" />}
-            triggerClassName="px-1 py-1"
-            items={taskStatusOrder.map((status) => ({
-              id: status,
-              label: taskStatusMeta[status].label,
-              icon: taskStatusMeta[status].icon,
-              selected: status === task.status,
-              onSelect: () => onChangeStatus(task, status),
-            }))}
-          />
-        </div>
-      </div>
+      <h4
+        className={cn(
+          'text-sm leading-snug font-medium',
+          task.status === 'done' ? 'text-slate-500' : 'text-slate-900',
+        )}
+      >
+        {task.title}
+      </h4>
 
       {task.status === 'blocked' && task.blockedReason ? (
         <p className="mt-2 rounded-lg bg-rose-50 px-2.5 py-1.5 text-xs text-rose-900">
-          <span className="font-medium">Waiting on: </span>
+          <span className="font-medium">Blocked: </span>
           {task.blockedReason}
         </p>
       ) : null}
@@ -76,15 +52,39 @@ export function TaskCard({ task, owner, milestone, onEdit, onChangeStatus }: Tas
           </Badge>
         )}
         {milestone ? (
-          <Badge tone="accent" icon={Flag}>
-            {milestone.title}
+          <Badge tone="accent" icon={Flag} className="max-w-full">
+            <span className="min-w-0 truncate">{milestone.title}</span>
           </Badge>
         ) : null}
       </div>
 
       <div className="mt-2.5 flex items-center gap-2">
         <Avatar person={owner} size="xs" />
-        <span className="truncate text-xs text-slate-500">{owner?.name ?? 'Unassigned'}</span>
+        {/* The avatar carries the full name for screen readers, so the visible
+            label can stay short enough to fit a board column. */}
+        <span aria-hidden="true" className="min-w-0 flex-1 truncate text-xs text-slate-500">
+          {owner ? owner.name.split(' ')[0] : 'Unassigned'}
+        </span>
+        <button
+          type="button"
+          onClick={() => onEdit(task)}
+          className="shrink-0 rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+        >
+          <Pencil aria-hidden="true" className="size-3.5" />
+          <span className="sr-only">Edit {task.title}</span>
+        </button>
+        <Menu
+          label={`Change status of ${task.title}`}
+          trigger={<MoveRight aria-hidden="true" className="size-3.5" />}
+          triggerClassName="px-1 py-1"
+          items={taskStatusOrder.map((status) => ({
+            id: status,
+            label: taskStatusMeta[status].label,
+            icon: taskStatusMeta[status].icon,
+            selected: status === task.status,
+            onSelect: () => onChangeStatus(task, status),
+          }))}
+        />
       </div>
     </article>
   )

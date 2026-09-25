@@ -54,7 +54,7 @@ export function OverviewTab() {
 
       <Section
         className="xl:col-span-2"
-        title={`Why this goal is ${healthLabel[health.level].toLowerCase()}`}
+        title={`Why this goal is marked ${healthLabel[health.level]}`}
         description="Health combines how the target is tracking with what is getting in the way."
         action={<HealthBadge level={health.level} />}
       >

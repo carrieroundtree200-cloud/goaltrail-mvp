@@ -235,7 +235,7 @@ export function TaskDialog({
             <Textarea
               id="task-blocked"
               rows={2}
-              placeholder="Waiting on the vendor to confirm the time-zone setting."
+              placeholder="The vendor has not confirmed the time-zone setting can be changed."
               invalid={Boolean(errors.blockedReason)}
               {...register('blockedReason')}
             />

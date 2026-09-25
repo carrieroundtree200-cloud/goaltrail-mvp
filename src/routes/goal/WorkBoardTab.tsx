@@ -102,7 +102,7 @@ export function WorkBoardTab() {
         </div>
       ) : (
         <div className="scrollbar-slim -mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-          <div className="grid min-w-5xl grid-cols-5 gap-4">
+          <div className="grid min-w-6xl grid-cols-5 gap-4">
             {columns.map((column) => (
               <section key={column.status} className="flex min-w-0 flex-col">
                 <header className="mb-3 flex items-center justify-between gap-2">

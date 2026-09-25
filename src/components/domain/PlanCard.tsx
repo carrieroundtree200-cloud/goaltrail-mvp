@@ -11,7 +11,7 @@ import type { PlanProgress } from '@/lib/plan'
  */
 export function PlanCard({ plan }: { plan: PlanProgress }) {
   return (
-    <div className="card p-4 sm:p-5">
+    <div className="card h-full p-4 sm:p-5">
       <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
         <ListChecks aria-hidden="true" className="size-3.5" />
         <span>Plan progress</span>

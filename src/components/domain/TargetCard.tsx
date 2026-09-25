@@ -25,7 +25,7 @@ export function TargetCard({ goal, metric }: { goal: Goal; metric: MetricSnapsho
   const meta = targetMeta[metric.status]
 
   return (
-    <div className="card p-4 sm:p-5">
+    <div className="card h-full p-4 sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
