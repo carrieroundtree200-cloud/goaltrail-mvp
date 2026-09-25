@@ -28,9 +28,7 @@ export function RisksTab() {
   const view = useGoalView()
   const { workspace } = useWorkspace()
   const [filter, setFilter] = useState<Filter>('open')
-  const [dialog, setDialog] = useState<{ open: boolean; item?: TrackedItem; kind?: TrackedItemKind }>(
-    { open: false },
-  )
+  const [dialog, setDialog] = useState<{ open: boolean; item?: TrackedItem }>({ open: false })
 
   const { allItems, items, meetings } = view
 
@@ -151,7 +149,7 @@ export function RisksTab() {
         item={dialog.item}
         people={workspace.people}
         meetings={meetings}
-        defaultKind={dialog.kind ?? 'risk'}
+        defaultKind="risk"
       />
     </div>
   )
