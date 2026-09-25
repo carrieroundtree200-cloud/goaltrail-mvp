@@ -103,9 +103,9 @@ export function PeopleTab() {
                   <Badge tone={member.role === 'owner' ? 'accent' : 'neutral'}>{role.label}</Badge>
                 </div>
 
-                <p className="mt-3 text-sm text-slate-600">{member.responsibility}</p>
+                <p className="mt-3 mb-4 text-sm text-slate-600">{member.responsibility}</p>
 
-                <div className="border-hairline mt-4 flex items-center justify-between gap-2 border-t pt-3">
+                <div className="border-hairline mt-auto flex items-center justify-between gap-2 border-t pt-3">
                   <div className="flex flex-wrap gap-1.5">
                     <Badge tone="neutral" icon={taskStatusMeta.in_progress.icon}>
                       {pluralize(open.length, 'open task')}
