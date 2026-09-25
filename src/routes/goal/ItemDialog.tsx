@@ -66,6 +66,8 @@ export function ItemDialog({
     handleSubmit,
     reset,
     watch,
+    setValue,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({ resolver: zodResolver(schema) })
 
@@ -86,6 +88,16 @@ export function ItemDialog({
   }, [open, item, defaultKind, people, reset])
 
   const kind = watch('kind') ?? defaultKind
+
+  // Each kind has its own set of statuses, so switching kind can strand the
+  // selected status on an option that no longer exists.
+  useEffect(() => {
+    if (!open) return
+    const allowed = itemStatusesByKind[kind]
+    if (!allowed.includes(getValues('status'))) {
+      setValue('status', allowed[0]!, { shouldValidate: true })
+    }
+  }, [kind, open, getValues, setValue])
 
   const onSubmit = handleSubmit(async (values) => {
     const payload = {

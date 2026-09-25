@@ -87,7 +87,7 @@ export function OverviewTab() {
         title="Open blockers and risks"
         description={`${items.openBlockers.length} blockers · ${items.openRisks.length} risks · ${items.openChanges.length} changes`}
         action={
-          <ButtonLink to="../risks" variant="ghost" size="sm">
+          <ButtonLink to={`/goals/${goal.id}/risks`} variant="ghost" size="sm">
             View all
           </ButtonLink>
         }
@@ -147,7 +147,7 @@ export function OverviewTab() {
       <Section
         title="Latest meeting"
         action={
-          <ButtonLink to="../meetings" variant="ghost" size="sm">
+          <ButtonLink to={`/goals/${goal.id}/meetings`} variant="ghost" size="sm">
             All meetings
           </ButtonLink>
         }
@@ -179,7 +179,7 @@ export function OverviewTab() {
             title="No meetings yet"
             description="Log a meeting to connect what the team discussed to this goal."
             action={
-              <ButtonLink to="../meetings?new=1" size="sm">
+              <ButtonLink to={`/goals/${goal.id}/meetings?new=1`} size="sm">
                 Log a meeting
               </ButtonLink>
             }
@@ -192,7 +192,7 @@ export function OverviewTab() {
         title="Immediate work"
         description="What is in progress or blocked right now, most urgent first."
         action={
-          <ButtonLink to="../work" variant="ghost" size="sm">
+          <ButtonLink to={`/goals/${goal.id}/work`} variant="ghost" size="sm">
             Work board
           </ButtonLink>
         }
@@ -204,7 +204,7 @@ export function OverviewTab() {
             title="Nothing in flight"
             description="No tasks are in progress or blocked. Pick the next item up from the board."
             action={
-              <ButtonLink to="../work" size="sm">
+              <ButtonLink to={`/goals/${goal.id}/work`} size="sm">
                 Open the work board
               </ButtonLink>
             }
@@ -274,7 +274,7 @@ export function OverviewTab() {
                 {items.highImpactOpen.length} high-impact {items.highImpactOpen.length === 1 ? 'item is' : 'items are'} still open.
               </span>{' '}
               These carry the most weight in this goal&rsquo;s health rating.{' '}
-              <Link to="../risks" className="font-medium underline underline-offset-2">
+              <Link to={`/goals/${goal.id}/risks`} className="font-medium underline underline-offset-2">
                 Review them
               </Link>
               .
