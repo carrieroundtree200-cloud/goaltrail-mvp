@@ -8,9 +8,39 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
+# Build output
 dist
 dist-ssr
+build
+out
+.vite
+*.tsbuildinfo
+
+# Test output
+coverage
+.vitest
+
 *.local
+
+# Secrets. The app itself needs none of these — it runs entirely in the browser
+# with no server, no account and no API key — so anything matching here is a
+# local accident rather than something the project expects.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+id_rsa*
+id_ed25519*
+.npmrc
+.netrc
+secrets.json
+credentials.json
+service-account*.json
 
 # Editor directories and files
 .vscode/*
