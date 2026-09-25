@@ -8,12 +8,13 @@ import { Dialog } from '@/components/ui/Dialog'
 import { Field, Input, Textarea } from '@/components/ui/Field'
 import { toDateOnly, today } from '@/lib/dates'
 import { formatMetricValue } from '@/lib/format'
+import { numericField } from '@/lib/validation'
 import { useWorkspace } from '@/state/workspace'
 import type { Goal } from '@/types'
 
 const schema = z.object({
   date: z.string().min(1, 'Pick the date this measurement is for.'),
-  value: z.coerce.number({ invalid_type_error: 'Enter a number.' }),
+  value: numericField('Enter the number you measured.'),
   note: z.string().max(280, 'Keep the note under 280 characters.').optional(),
 })
 
@@ -36,11 +37,11 @@ export function MeasurementDialog({
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { date: toDateOnly(today()), value: '' as unknown as number, note: '' },
+    defaultValues: { date: toDateOnly(today()), value: '', note: '' },
   })
 
   useEffect(() => {
-    if (open) reset({ date: toDateOnly(today()), value: '' as unknown as number, note: '' })
+    if (open) reset({ date: toDateOnly(today()), value: '', note: '' })
   }, [open, reset])
 
   const onSubmit = handleSubmit(async (values) => {

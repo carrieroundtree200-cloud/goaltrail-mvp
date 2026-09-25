@@ -13,6 +13,7 @@ import { cn } from '@/lib/cn'
 import { daysUntil, formatDate, shiftDays, toDateOnly, today } from '@/lib/dates'
 import { formatMetricValue } from '@/lib/format'
 import { smartBreakdown, smartStatement } from '@/lib/smart'
+import { numericField } from '@/lib/validation'
 import { useWorkspace } from '@/state/workspace'
 import type { MetricUnit } from '@/types'
 
@@ -35,8 +36,8 @@ const schema = z
     metricName: z.string().trim().min(3, 'Name the number you are moving.'),
     unit: z.enum(['percent', 'currency', 'count', 'days', 'hours', 'rating']),
     direction: z.enum(['increase', 'decrease']),
-    baseline: z.coerce.number({ invalid_type_error: 'Enter a number.' }),
-    target: z.coerce.number({ invalid_type_error: 'Enter a number.' }),
+    baseline: numericField('Enter where the number stands today.'),
+    target: numericField('Enter the number you are aiming for.'),
     source: z.string().trim().min(5, 'Say where the number comes from.'),
     cadence: z.enum(['daily', 'weekly', 'biweekly', 'monthly']),
 
@@ -118,8 +119,8 @@ export function NewGoal() {
       metricName: '',
       unit: 'percent',
       direction: 'increase',
-      baseline: '' as unknown as number,
-      target: '' as unknown as number,
+      baseline: '',
+      target: '',
       source: '',
       cadence: 'weekly',
       startDate: toDateOnly(today()),

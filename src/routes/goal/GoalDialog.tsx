@@ -6,28 +6,23 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/Button'
 import { Dialog } from '@/components/ui/Dialog'
 import { Field, Input, Select, Textarea } from '@/components/ui/Field'
+import { numericField } from '@/lib/validation'
 import { useWorkspace } from '@/state/workspace'
 import type { Goal, Person } from '@/types'
 
-const schema = z
-  .object({
-    title: z.string().trim().min(6, 'Give the goal a clear, specific name.'),
-    purpose: z.string().trim().min(20, 'Explain why this matters in a sentence or two.'),
-    beneficiary: z.string().trim().min(3, 'Who feels the difference if this works?'),
-    metricName: z.string().trim().min(3, 'Name the number you are moving.'),
-    metricSource: z.string().trim().min(3, 'Say where the number comes from.'),
-    target: z.coerce.number(),
-    deadline: z.string().min(1, 'Pick a deadline.'),
-    ownerId: z.string().min(1),
-    sponsorId: z.string().optional(),
-    status: z.enum(['active', 'paused', 'achieved', 'missed', 'archived']),
-    tags: z.string().optional(),
-  })
-  .superRefine((values, context) => {
-    if (Number.isNaN(values.target)) {
-      context.addIssue({ code: z.ZodIssueCode.custom, path: ['target'], message: 'Enter a number.' })
-    }
-  })
+const schema = z.object({
+  title: z.string().trim().min(6, 'Give the goal a clear, specific name.'),
+  purpose: z.string().trim().min(20, 'Explain why this matters in a sentence or two.'),
+  beneficiary: z.string().trim().min(3, 'Who feels the difference if this works?'),
+  metricName: z.string().trim().min(3, 'Name the number you are moving.'),
+  metricSource: z.string().trim().min(3, 'Say where the number comes from.'),
+  target: numericField('Enter the target number.'),
+  deadline: z.string().min(1, 'Pick a deadline.'),
+  ownerId: z.string().min(1),
+  sponsorId: z.string().optional(),
+  status: z.enum(['active', 'paused', 'achieved', 'missed', 'archived']),
+  tags: z.string().optional(),
+})
 
 type FormValues = z.input<typeof schema>
 
