@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft, ArrowRight, Check, Plus, Sparkles, Trash2 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, type FormEvent, type KeyboardEvent } from 'react'
 import { useFieldArray, useForm, type FieldPath } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -169,7 +169,7 @@ export function NewGoal() {
     if (valid) setStep((current) => Math.min(current + 1, steps.length - 1))
   }
 
-  const onSubmit = handleSubmit(async (raw) => {
+  const submitFinalStep = handleSubmit(async (raw) => {
     const parsed = raw as unknown as Output
     const goal = await createGoal({
       title: parsed.title.trim(),
@@ -212,6 +212,29 @@ export function NewGoal() {
 
     navigate(`/goals/${goal.id}`)
   })
+
+  /**
+   * Only the last step renders a submit button, so the browser never submits
+   * this form on its own. Enter therefore does nothing until the review step,
+   * which strands anyone filling the wizard in from the keyboard.
+   */
+  function onKeyDown(event: KeyboardEvent<HTMLFormElement>) {
+    if (event.key !== 'Enter' || step === steps.length - 1) return
+    const target = event.target as HTMLElement
+    if (target.tagName === 'TEXTAREA' || target.tagName === 'BUTTON') return
+    event.preventDefault()
+    void goNext()
+  }
+
+  /** Belt and braces: whatever submits this form, only the review step creates the goal. */
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    if (step < steps.length - 1) {
+      event.preventDefault()
+      await goNext()
+      return
+    }
+    await submitFinalStep(event)
+  }
 
   return (
     <Page className="max-w-4xl space-y-6">
@@ -264,7 +287,11 @@ export function NewGoal() {
         })}
       </ol>
 
-      <form onSubmit={onSubmit} className="card p-5 sm:p-6">
+      <form
+        onSubmit={(event) => void onSubmit(event)}
+        onKeyDown={onKeyDown}
+        className="card p-5 sm:p-6"
+      >
         {step === 0 ? (
           <div className="space-y-4">
             <Field
