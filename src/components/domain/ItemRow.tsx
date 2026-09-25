@@ -2,7 +2,7 @@ import { CalendarClock, Pencil, UserRound } from 'lucide-react'
 
 import { Badge } from '@/components/ui/Badge'
 import { impactMeta, itemKindMeta, itemStatusMeta } from '@/components/domain/status'
-import { describeDueDate, formatDate, isOverdue } from '@/lib/dates'
+import { describeSchedule, formatDate, isOverdue } from '@/lib/dates'
 import type { Person, TrackedItem } from '@/types'
 
 interface ItemRowProps {
@@ -70,7 +70,9 @@ export function ItemRow({ item, owner, meetingTitle, onEdit }: ItemRowProps) {
           <CalendarClock aria-hidden="true" className="size-3.5" />
           <dt className="sr-only">Review date</dt>
           <dd className={overdue ? 'font-medium text-rose-700' : undefined}>
-            {item.dueDate ? describeDueDate(item.dueDate) : 'No review date'}
+            {item.dueDate
+              ? describeSchedule(item.dueDate, Boolean(item.resolvedAt))
+              : 'No review date'}
           </dd>
         </div>
         {meetingTitle ? (

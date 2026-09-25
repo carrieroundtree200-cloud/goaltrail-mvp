@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Menu } from '@/components/ui/Menu'
 import { priorityMeta, taskStatusMeta, taskStatusOrder } from '@/components/domain/status'
 import { cn } from '@/lib/cn'
-import { describeDueDate, isOverdue } from '@/lib/dates'
+import { describeSchedule, isOverdue } from '@/lib/dates'
 import type { Milestone, Person, Task, TaskStatus } from '@/types'
 
 interface TaskCardProps {
@@ -42,15 +42,9 @@ export function TaskCard({ task, owner, milestone, onEdit, onChangeStatus }: Tas
         <Badge tone={priority.tone} icon={priority.icon}>
           {priority.label}
         </Badge>
-        {task.dueDate ? (
-          <Badge tone={overdue ? 'critical' : 'neutral'} icon={CalendarClock}>
-            {describeDueDate(task.dueDate)}
-          </Badge>
-        ) : (
-          <Badge tone="neutral" icon={CalendarClock}>
-            No due date
-          </Badge>
-        )}
+        <Badge tone={overdue ? 'critical' : 'neutral'} icon={CalendarClock}>
+          {describeSchedule(task.dueDate, task.status === 'done')}
+        </Badge>
         {milestone ? (
           <Badge tone="accent" icon={Flag} className="max-w-full">
             <span className="min-w-0 truncate">{milestone.title}</span>

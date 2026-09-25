@@ -28,7 +28,7 @@ import { Section } from '@/components/ui/Card'
 import { Dialog } from '@/components/ui/Dialog'
 import { Field, Input, Select, Textarea } from '@/components/ui/Field'
 import { EmptyState, ErrorState, LoadingPanel } from '@/components/ui/states'
-import { describeDueDate, formatDate, toDateOnly, today } from '@/lib/dates'
+import { describeSchedule, formatDate, toDateOnly, today } from '@/lib/dates'
 import { formatMetricValue } from '@/lib/format'
 import { ItemDialog } from '@/routes/goal/ItemDialog'
 import { MeetingDialog } from '@/routes/goal/MeetingDialog'
@@ -274,7 +274,7 @@ export function MeetingDetail() {
                         <p className="mt-0.5 text-xs text-slate-500">
                           {workspace.people.find((person) => person.id === task.ownerId)?.name ??
                             'Unassigned'}{' '}
-                          · {describeDueDate(task.dueDate)}
+                          · {describeSchedule(task.dueDate, task.status === 'done')}
                         </p>
                       </div>
                       <div className="flex shrink-0 flex-wrap items-center gap-1.5">
@@ -368,7 +368,7 @@ export function MeetingDetail() {
           ) : null}
 
           {goalView ? (
-            <Section title="Goal at the time of reading" description={goal.metric.name}>
+            <Section title="Where the goal stands now" description={goal.metric.name}>
               <p className="text-2xl font-semibold text-slate-900 tabular-nums">
                 {formatMetricValue(goalView.metric.current, goal.metric.unit)}
               </p>

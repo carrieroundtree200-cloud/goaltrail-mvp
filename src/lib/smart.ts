@@ -16,6 +16,11 @@ export function smartStatement(goal: GoalLike, ownerName?: string): string {
   return `${verb} ${metric.name.toLowerCase()} from ${formatMetricValue(metric.baseline, metric.unit)} to ${formatMetricValue(metric.target, metric.unit)} by ${formatDate(goal.deadline)}${owner}.`
 }
 
+/** Sources are written as standalone phrases, so they need folding into a sentence. */
+function lowerFirst(text: string): string {
+  return text.slice(0, 1).toLowerCase() + text.slice(1)
+}
+
 export interface SmartPart {
   letter: string
   label: string
@@ -37,7 +42,7 @@ export function smartBreakdown(goal: GoalLike, ownerName?: string): SmartPart[] 
     {
       letter: 'M',
       label: 'Measurable',
-      text: `${metric.name}, measured from ${metric.source || 'a source you name'}, read ${metric.cadence}. Baseline ${formatMetricValue(metric.baseline, metric.unit)}, target ${formatMetricValue(metric.target, metric.unit)}.`,
+      text: `${metric.name}, read ${metric.cadence}. Baseline ${formatMetricValue(metric.baseline, metric.unit)}, target ${formatMetricValue(metric.target, metric.unit)}. Taken from ${metric.source ? lowerFirst(metric.source) : 'a source you name'}.`,
     },
     {
       letter: 'A',

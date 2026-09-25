@@ -114,7 +114,9 @@ export function PlanTab() {
                         <span
                           className={`text-xs ${overdue ? 'font-medium text-rose-700' : 'text-slate-500'}`}
                         >
-                          {formatDate(milestone.dueDate)} · {describeDueDate(milestone.dueDate)}
+                          {milestone.status === 'done'
+                            ? `Was due ${formatDate(milestone.dueDate)}`
+                            : `${formatDate(milestone.dueDate)} · ${describeDueDate(milestone.dueDate)}`}
                         </span>
                         <span className="flex items-center gap-1.5 text-xs text-slate-500">
                           <Avatar person={person(milestone.ownerId)} size="xs" />

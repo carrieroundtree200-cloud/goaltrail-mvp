@@ -79,6 +79,15 @@ export function describeDueDate(date: DateOnly | undefined): string {
   return `Due in ${days} days`
 }
 
+/**
+ * The same date, phrased for work that is already finished. Nothing that is
+ * done should still be described as overdue.
+ */
+export function describeSchedule(date: DateOnly | undefined, finished: boolean): string {
+  if (!date) return finished ? 'No due date was set' : 'No due date'
+  return finished ? `Was due ${formatDate(date)}` : describeDueDate(date)
+}
+
 export function describeDeadline(date: DateOnly): string {
   const days = daysUntil(date)
   if (days === 0) return 'Deadline is today'

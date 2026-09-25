@@ -105,7 +105,8 @@ export function TargetCard({ goal, metric }: { goal: Goal; metric: MetricSnapsho
       </dl>
 
       <p className="mt-3 text-xs text-slate-500">
-        Measured from {goal.metric.source}.
+        <span className="font-medium">Where this number comes from: </span>
+        {goal.metric.source}.
       </p>
     </div>
   )
